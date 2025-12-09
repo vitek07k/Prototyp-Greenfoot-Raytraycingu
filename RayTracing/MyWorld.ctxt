@@ -10,3 +10,4 @@ comment3.target=double\ vzdalenost(double,\ double,\ double,\ double,\ double,\ 
 comment4.params=x1\ y1\ z1\ x2\ y2\ z2
 comment4.target=void\ zmenVektor(double,\ double,\ double,\ double,\ double,\ double)
 numComments=5
+
