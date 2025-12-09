@@ -48,6 +48,9 @@ Otáčení kamery v této verzi ještě není.
 ## Přípravy na započatí sledování paprsku
 
 ```java
+//Spočítání vektoru paprsku
+zmenVektor(KameraX, KameraY, KameraZ, pixelX, pixelY, pixelZ);
+
 //Započatí sledování paprsku
 paprsekX = KameraX;
 paprsekY = KameraY;
@@ -56,7 +59,9 @@ paprsekZ = KameraZ;
 krok = 0;
 sledovatPaprsek = true;
 ```
-[> Odkaz na kód <](RayTracingV1/MyWorld.java#L114-L120)
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L111-L120)
+
+Tady se pomocí funkce, kterou vysvětluji níže, spočítá vektor, s kterým se bude paprsek pohybovat.
 
 PaprsekXYZ je pozicí paprsku kterého budeme později při sledování "Tracingu" posouvat vektorem, který směřuje zkrz pixelXYZ (průsečík paprsku). Jeho pozice se zde na začátek nastavuje na pozici kamery - z té bude startovat.
 Proměnná 'krok' (int, privátní) je počítadlo, které se bude zvyšovat pokaždé když paprsek posunem vektorem - to je velice důležité - po určitých krocích je třeba paprsek zastavit kdyby do ničeho nenarazil a zamezit tak vzniku nekonečné smyčky.
@@ -123,10 +128,90 @@ Vektor se počítá jednoduše, vezme se relativní pozice a podělí se vzdále
 
 ### Sledování paprsku
 
+```java
+if (sledovatPaprsek) {
 
+...
 
+if (krok > 500) {sledovatPaprsek = false;}
+krok += 1;
+if (sledovatPaprsek) return;
+}
+```
 
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L48-L101)
 
+Dokud je boolean 'sledovatPaprsek' true, tak dochází ke smyčce sledování paprsku. Na konci je failsafe, kdyby paprsek do ničeho nenarazil, tak se po 500ti krocích sledování ukončí.
+PS: Všechny následující kódy týkající se sledování paprsku jsou od teď umíjsťeny v této podmínce - tam co jsou ty tři tečky :D
 
+### Posunutí paprsku o vektor
 
+```java
+paprsekX += vektorX;
+paprsekY += vektorY;
+paprsekZ += vektorZ;
+                    
+bg.setColorAt(drawX, drawY, Color.CYAN);
+```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L50-L54)
 
+Tady se paprsek posune o vektor a pixel se vykreslí tyrkysově (barva pozadí, kdyby do ničeho nakonec nenarazil).
+
+### Render šachovnicové podlahy
+
+```java
+//Podlaha
+if (paprsekY < 0) {
+
+        boolean cerna = false;
+                        
+        if (Math.abs(paprsekX) % 40 < 20) {
+                cerna = true;
+        }
+        if (Math.abs(paprsekZ) % 40 < 20) {
+                cerna = !cerna;
+        }                        
+                        
+        if (cerna) {
+                bg.setColorAt(drawX, drawY, Color.BLACK);
+        } else {
+                bg.setColorAt(drawX, drawY, Color.WHITE);
+        }
+                sledovatPaprsek = false;
+        }
+```
+
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L56-L74)
+
+Tady kontroluji jestli se paprsek nedotýká země (paprsekY < 0) a pokud ano, tak pomocí modulátoru mohu udělat podlahu lajnovanou a převrátit barvy podla kolmíma lajnama.
+
+### Render objektů
+
+```java
+//Koule 1
+if (vzdalenost(paprsekX, paprsekY, paprsekZ, 0, 80, 150) < 40) {
+        bg.setColorAt(drawX, drawY, Color.RED);
+        sledovatPaprsek = false;
+ }
+                    
+//Koule 2
+if (vzdalenost(paprsekX, paprsekY, paprsekZ, -100, 0, 200) < 30) {
+        bg.setColorAt(drawX, drawY, Color.BLUE);
+        sledovatPaprsek = false;
+}
+                
+//Válec
+if (vzdalenost(paprsekX, paprsekY, paprsekZ, 100, paprsekY, 150) < 20) {        
+        if (paprsekY < 50) {
+                bg.setColorAt(drawX, drawY, Color.GREEN);
+                sledovatPaprsek = false;
+        }    
+}        
+```
+
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L76-L96)
+
+Renderování koule je jednoduché, pouze zkontrolujeme, jestli pozice paprsku je v určité vzdálenosti od fixního bodu středu koule. A u válce je to to stejné, ale neřešíme výškovou souřadnici u vzdálenosti, jen druhou podmínkou nastavíme výšku, jinak by byl nekonečně vysoký.
+
+## Závěr
+To je prozatím vše :D
