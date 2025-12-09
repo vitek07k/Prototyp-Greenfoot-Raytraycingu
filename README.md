@@ -12,3 +12,5 @@ PS: Není to nejvíce uhlazený skript, ale prosím o toleranci, v javě jsem za
 
 První prototyp RayTracingu, udělal jsem jej 8.12.2025 asi během 2 - 3 hodin.
 
+Celá tato verze se nachází ve složce
+
