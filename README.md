@@ -2,11 +2,14 @@
 
 Když jsem se poprvé seznámil s GreenFootem před asi čtyřmi měsíci na střední škole, nevěděl jsem o javě vůbec nic. Hned mě ale napadla otázka: Jak by toto jednoduché programovací prostředí vypadal, kdybych jej vytáhl k jeho absolutním limitům? :D
 
-Takže tady jsem dnes, vytvářím svůj první GitHub repozitář abych mohl detailně zdokumentovat svoji práci.
+Takže tady jsem dnes, vytvářím svůj první GitHub repozitář abych mohl zdokumentovat svoji práci.
 
 Níže začnu s takzvanou "kapitoulou 1", je to první prototyp. Chtěl bych někdy pokračovat i s druhou kapitolou, kde bych přidal odlesky a stíny.
 
-PS: Není to nejvíce uhlazený skript, ale prosím o toleranci, v javě jsem začal teprve před čtyřmi měsíci :D
+### Poznámky:
+
+Jedná se jen o "tech demo". Není to veskutečnosti k ničemu praktické, protože vykreslit jen jeden obrázek trvá nejméně půl minuty :D. 
+Není to nejvíce uhlazený skript, v javě jsem začal teprve před čtyřmi měsíci :D
 
 # Kapitola 1
 
@@ -14,6 +17,11 @@ První prototyp RayTracingu, udělal jsem jej 8.12.2025 během cca. 2 - 3 hodin.
 
 Celá tato verze se nachází ve složce [/RayTracingV1](RayTracingV1/).
 Skript, který zde budu dokumentovat je pouze [MyWorld.java](RayTracingV1/MyWorld.java), protože jsem celý raytracer napsal jen do wordu - připadalo mi zbytečné dávat to do aktéra, protože celý engine lze jednoduše rozjet z jedniné třídy.
+
+![Ukázka RayTracingu prvního prototypu](Obrazky/V1/ukazka.png)
+
+Nalevo je modrá koule, napůl zanořená do země. Uprostřed červená koule nad zemí. Vpravo zelený válec umíjstěný na zemi.
+
 
 ## Výpočet průsečíku paprsku
 Paprsek je pomyslný bod v 3D prostoru s vektorem, jehož poloha je zapsána třemi proměnamy (paprsekX, paprekY, paprsekZ)
@@ -53,9 +61,72 @@ sledovatPaprsek = true;
 PaprsekXYZ je pozicí paprsku kterého budeme později při sledování "Tracingu" posouvat vektorem, který směřuje zkrz pixelXYZ (průsečík paprsku). Jeho pozice se zde na začátek nastavuje na pozici kamery - z té bude startovat.
 Proměnná 'krok' (int, privátní) je počítadlo, které se bude zvyšovat pokaždé když paprsek posunem vektorem - to je velice důležité - po určitých krocích je třeba paprsek zastavit kdyby do ničeho nenarazil a zamezit tak vzniku nekonečné smyčky.
 
+'sledovatPaprsek' je boolean. Když je true, tak běží sledování paprsku. To jsem udělal tak, že jsem na začátek aktu dal podmínku 'if (sledovatPaprsek) {...}' která vždycky skončí akt pomocí 'return;' dřív, než se rozběhne jakýkoliv skript který jsem doposud zmiňoval. Proměnna se vrátí zpět na false (čímž tuto smyčku ukončí a nechá rozjet skripty víše), jakmile paprsek do něčeho narazí, nebo nedosáhne stropu kroků.
 
+## Dokončení 
 
+Ještě před tím, než začne dlouhá smyčka sledování paprsku tak se dokončí akt, tam už zbývá jen následující kód:
 
+```java
+drawX +=1;
+if (drawX >= getWidth()) {
+        drawX = 0;
+        drawY += 1;
+}
+if (drawY >= getHeight()) {
+        Greenfoot.stop();
+}
+```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L122-L129)
 
+Tady se zvýší drawX o 1, to se postará o to aby se příště rendroval další pixel - ten na hned napravo toho, který se bude rendrovat teď. Následující podmínka se postarajá o to, aby když se dojde na konec řádku, tak se začne znovu vlevo hned na dalším. Poslední podmínka zastaví engine, jakmile se vyrendruje poslední pixel.
 
+## Funkce    
+
+Před tím, něž se vrhnem na samotné sledování paprsku tak nejdříve musím letmě vysvětlit dvě funkce.
+
+### Výpočet vzdálenosti k bodu
+
+```java
+//Spočítání vzdálenosti
+public double vzdalenost(double x1, double y1, double z1, double x2, double y2, double z2) {
+        double relX = x2 - x1;
+        double relY = y2 - y1;
+        double relZ = z2 - z1;
         
+        return Math.sqrt(relX * relX + relY * relY + relZ * relZ);
+}
+```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L132-L139)
+
+Tato funkce je velice jednoduchá. Dosazují se jen dva body v 3D prostoru a vrátí se (return), jak daleko jsou od sebe vzdálený. Funguje to tak, že se spočítá relativní pozici obou bodů, a poté jejich vzdálenost pomocí rozšířené Pythagorovi věty.
+
+### Výpočet a nastavení vektoru
+
+```java
+//Změnit vektor
+public void zmenVektor(double x1, double y1, double z1, double x2, double y2, double z2) {
+        double relX = x2 - x1;
+        double relY = y2 - y1;
+        double relZ = z2 - z1;
+    
+        double vzdalenost = Math.sqrt(relX * relX + relY * relY + relZ * relZ);
+        
+        vektorX = relX / vzdalenost; 
+        vektorY = relY / vzdalenost;
+        vektorZ = relZ / vzdalenost;
+}
+```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L141-L152)
+
+Vektor se počítá jednoduše, vezme se relativní pozice a podělí se vzdáleností.
+
+### Sledování paprsku
+
+
+
+
+
+
+
+
