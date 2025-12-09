@@ -10,7 +10,7 @@ PS: Není to nejvíce uhlazený skript, ale prosím o toleranci, v javě jsem za
 
 # Kapitola 1
 
-První prototyp RayTracingu, udělal jsem jej 8.12.2025 asi během 2 - 3 hodin.
+První prototyp RayTracingu, udělal jsem jej 8.12.2025 během cca. 2 - 3 hodin.
 
 Celá tato verze se nachází ve složce [/RayTracingV1](RayTracingV1/)
 Skript, který zde budu dokumentovat je jen [MyWorld.java](RayTracingV1/MyWorld.java), protože jsem celý raytracer napsal jen do wordu, připadalo mi zbytečné dávat to do aktéra, protože celý engine lze jednoduše rozjet z jednoho .java souboru.
@@ -21,18 +21,41 @@ Průsečík paprsku je bod, zkrz který bude raytracer posílat paprsek, nacház
 
 Z platformy scratch.mit.edu (příště odkazuji jen jako scratch :D), jakožto můj první programovací jazyk jsem byl zvyklí na souřadnicoví systém, kde x0 a y0 byly uprostřed. Greenfoot však má výchozí souřadnici v levém horním rohu, což je pro mě trochu nešikovné. Z tohoto důvodu jsem si systém převedl na takový, jaký má scratch
 
-[Výpočet průsečíku paprsku](RayTracingV1/MyWorld.java#L106-L109)
+
 ```java
 //Vypočítání průsečíku paprsku
 pixelX = (drawX - getWidth()/2) + KameraX;
 pixelY = -(drawY - getHeight()/2) + KameraY;
 pixelZ = vzdalenostKObrazovce + KameraZ;
 ```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L106-L109)
 
-PixelX,Y a Z tady odkazuje na bod kterým skript budem posílat paprsek, odečetl jsem od X a Y polovinu rozměru obrazovky tak, aby byl základní bod uprostřed obrazovky. (U souřadnice Y jsem to ještě invertoval tak, aby vyšší číslo bylo výš na v 3D prostoru)
+PixelX,Y a Z tady odkazuje na bod kterým skript bude posílat paprsek, odečetl jsem od X a Y polovinu rozměru obrazovky tak, aby byl základní bod uprostřed obrazovky. (U souřadnice Y jsem to ještě invertoval tak, aby vyšší číslo bylo výš na v 3D prostoru)
 DrawX a Y odkazují na pixelu na 2D scéně, na který budeme kreslit.
 vzdalenostKObrazovce je zde proměnná, která funguje jako opačné FOV, čím je větší, tím užšším "tunelem" se budeme dívat, protože 
 KameraX, Y a Z jsou pozice kamery, lze je na začátku skriptu upravit a pohybovat se tímpádem v prostoru
 
 PS: paprsekX,Y a Z jsou na začátku světa definované jako privátní double proměnné. DrawX,Y jsou private int. A kameraX,Y a Z také private int.
 Otáčení kamery ještě v této verzi není.
+
+## Přípravy na započatí sledování paprsku
+
+```java
+//Započatí sledování paprsku
+paprsekX = KameraX;
+paprsekY = KameraY;
+paprsekZ = KameraZ;
+        
+krok = 0;
+sledovatPaprsek = true;
+```
+[> Odkaz na kód <](RayTracingV1/MyWorld.java#L114-L120)
+
+PaprsekX-Y-Z je pozicí paprsku kterého budeme později při sledování "Tracingu" posouvat vektorem, který směřuje zkrz pixelXYZ. Jeho pozice se zde nastavuje na pozici kamery - z té bude startovat.
+Proměnná 'krok' (int, privátní) je počítadlo, které se bude zvyšovat pokaždé když paprsek posunem vektorem a je velice důležité - po určitých krocích je třeba paprsek zastavit kdyby do ničeho nenarazil -> zamezení nekonečné smyčky.
+
+
+
+
+
+        
