@@ -8,7 +8,7 @@ Níže začnu s takzvanou "kapitoulou 1", je to první prototyp. Chtěl bych ně
 
 PS: Není to nejvíce uhlazený skript, ale prosím o toleranci, v javě jsem začal teprve před čtyřmi měsíci :D
 
-#Kapitola 1
+# Kapitola 1
 
 První prototyp RayTracingu, udělal jsem jej 8.12.2025 asi během 2 - 3 hodin.
 
