@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Position
+comment1.params=x\ y\ z
+comment1.target=Position(float,\ float,\ float)
+comment2.params=pos
+comment2.target=Position\ getVectorTo(Position)
+comment3.params=pos
+comment3.target=float\ getDistanceTo(Position)
+comment4.params=vec3
+comment4.target=void\ moveByVector(Position)
+numComments=5
