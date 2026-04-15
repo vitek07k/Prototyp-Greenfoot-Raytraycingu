@@ -213,5 +213,22 @@ if (vzdalenost(paprsekX, paprsekY, paprsekZ, 100, paprsekY, 150) < 20) {
 
 Renderování koule je jednoduché, pouze zkontrolujeme, jestli pozice paprsku je v určité vzdálenosti od fixního bodu středu koule. A u válce je to to stejné, ale neřešíme výškovou souřadnici u vzdálenosti, jen druhou podmínkou nastavíme výšku, jinak by byl nekonečně vysoký.
 
+# Kapitola 2
+
+2. Prototyp Raytracingu, napsán 12.4.2026. Začal jsem v 7 ráno a na oběd končil (takže asi 5 hodin vkuse programování + byl výkend btw)
+
+Zdravím. Po asi čtyřech měsících jsem zpět, protože jsem se dokopal udělat druhou verzi. Ano, celý jsem to odzákladů přepsal, protože moje znalosti javy se výrazně zlepšily a došlo mi, jak lépe a čistěji mohu ten kód napsat.
+Vektory a pozice těles a paprsků jsem uklidil do samostatné třídy, a místo pomalích metod act() ve kterých jsem prováděl hlavní smyčku renderu teď používám smyčky 'for'. To způsobilo výrazné zrychlení renderování. Niní tedy místo asi minuty čekáme na obrázek tři vteřiny - Jupí :D
+Celý engine nově všude používá float namísto double, což zlepšuje výrazně rychlost bez výrazných ztrát kvality renderu.
+
+![Ukázka 2. generace prototypu](Obrazky/V2/Showcase1.png)
+![Ukázka 2. generace prototypu](Obrazky/V2/Showcase2.png)
+
+Oproti předchozí verzi jsou po grafické stránce nové pouze stíny, ale kód je mnohem čistší a rychlejší, což výrazně zlepší implementaci odlesků a dalších optimalizacích v budoucnu.
+
+Tato verze nyní implementuje pohyb pomocí kláves WASD, takže si to můžete vyzkoušet - ale čekejte 0.3FPS
+
+To je k mé rychlé dokumentaci zatím vše, tak zase do příští verze - Naviděnou!
+
 ## Závěr
-To je prozatím vše :D
+Děkuji mockrát za čtení této dokumentace, pokud se vám moje tvorba líbí, prosím zvažte podporu hvězdičkou na projekt případný follow na můj účet.
