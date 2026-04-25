@@ -13,6 +13,7 @@ Jedná se jen o "tech demo". Není to veskutečnosti k ničemu praktické, proto
 Není to nejvíce uhlazený skript, v javě jsem začal teprve před čtyřmi měsíci :D
 
 # Kapitola 1
+(verze 1)
 
 První prototyp RayTracingu, udělal jsem jej 8.12.2025 během cca. 2 - 3 hodin.
 
@@ -215,6 +216,7 @@ if (vzdalenost(paprsekX, paprsekY, paprsekZ, 100, paprsekY, 150) < 20) {
 Renderování koule je jednoduché, pouze zkontrolujeme, jestli pozice paprsku je v určité vzdálenosti od fixního bodu středu koule. A u válce je to to stejné, ale neřešíme výškovou souřadnici u vzdálenosti, jen druhou podmínkou nastavíme výšku, jinak by byl nekonečně vysoký.
 
 # Kapitola 2
+(verze 2)
 
 Druhý Prototyp Raytracingu, napsán 12.4.2026. Začal jsem v 7 ráno a na oběd končil (takže asi 5 hodin vkuse programování + byl výkend btw)
 
@@ -233,5 +235,44 @@ Tato verze také implementuje pohyb pomocí kláves WASD, takže si to můžete 
 
 To je k mé rychlé dokumentaci druhé verze zatím vše, tak zase do příští verze - Naviděnou! :D
 
-## Závěr
+# Kapitola 3
+(verze 3)
+
+25.04.2026
+Udělal jsem velké pokroky co se výkonu týče. Před přidáváním odlesků a dalších věcí musí engine běžet rychleji, jinak bude jeden render trvat neskutečně dlouho.
+
+### 1. Optimalizace
+Detekce, jestli paprsek narazil do koule probíhá tak, že se spočítá jestli vzdálenost od středu koule k paprsku je menší než její poloměr.
+
+Při výpočtu vzdálenosti používám pythagorovu větu. Ta pužívá odmocninu. Tady lze udělat malý fígl - přeskočit odmocňování a potom porovnat neodmocněnou vzdálenost s umocněným poloměrem koule.
+
+To znamená že v každém kroku ušetříme jednu odmocninu za každou kouli ve světě.
+
+Vzhledem k tomu, že rozlišení je 1000x650, každý paprsek má maximální životnost 700 kroků a ve světě jsou dvě koule, tak toto ušetřilo javě 496 160 201 odmocnin (počítáno přes debug counter).
+
+
+A výsledek v rychlosti?
+
+Z původních 2800ms na obrázek jsem se dostal na 2700ms na obrázek.
+To znamená že java jen tak přechroustá půl miliardy odmocnin za desetinu sekundy. -_-
+
+### 2. Optimalizace
+Tahle optimalizace je velice účinná narozdíl od předchozí. Spočívá v tom že před vysláním paprsku si udělám obdelník kolem bodu kde paprsek vyráží a bodu kde končí. Poté vyberu pouze objekty, které jsou v těchto hranicích a pouze u těchto kontroluji kolize.
+
+
+Bez optimalizace:
+
+Počet kontrol kolizí: 1 240 016 438
+Doba zpracování: 2 721 ms
+
+S optimalizací:
+
+Počet kontrol kolizí: 464 440 139
+Doba zpracování: 1 648 ms
+
+### Závěr kapitoly
+
+Tahle kapitola byla velice úspěšná. Raytracing nyní ušetří víc jak jednu sekundu času. Ale to už je ode mě všechno. Příští kapitola bude v sobě mít už odlesky, takže se máte na co těšit :D
+
+## Závěr Projektu
 Děkuji mockrát za čtení této dokumentace, pokud se vám moje tvorba líbí, prosím zvažte podporu hvězdičkou na projekt případný follow na můj účet.
