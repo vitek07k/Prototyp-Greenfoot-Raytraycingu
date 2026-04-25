@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=RTWorld
+comment1.params=pos\ size\ color
+comment1.target=void\ addBall(Position,\ int,\ greenfoot.Color)
+comment2.params=pos\ size\ color
+comment2.target=void\ addCube(Position,\ int,\ greenfoot.Color)
+comment3.params=height\ size\ color\ secColor
+comment3.target=void\ addChessGround(int,\ int,\ greenfoot.Color,\ greenfoot.Color)
+numComments=4
