@@ -34,7 +34,6 @@ public class RayTracer
         int pixelY = 0;
         int pixelZ = 450;
         
-        //int debugCounter = 1;
         
         GreenfootImage image = new GreenfootImage(width, height);
         
@@ -92,6 +91,8 @@ public class RayTracer
             
             if (collision.objectType == RTObject.ObjTypes.BALL) {
             
+                checkCount++;
+                
                 float dist = pos.getDistanceTo(collision.pos, true);
             
                 if (dist <= collision.sizeSQ){
@@ -100,10 +101,12 @@ public class RayTracer
                 
             }
         
-            checkCount++;
+           
             
             if (collision.objectType == RTObject.ObjTypes.CUBE) {
             
+                checkCount++;
+                
                 float x1 = pos.x;
                 float y1 = pos.y;
                 float z1 = pos.z;
@@ -124,15 +127,16 @@ public class RayTracer
             
             }
             
-            checkCount++;
+
             
             if (collision.objectType == RTObject.ObjTypes.CHESSGROUND) {
+                checkCount++;
+                
                 if (pos.y <= collision.pos.y) {
                     return collision;
                 }
             }
             
-            checkCount++;
             
         }
     
@@ -142,6 +146,8 @@ public class RayTracer
     private List getOptimizedCollisionList(List<RTObject> fullList, Position loc, Position vec, int steps) {
     
             List<RTObject> optimisedList = new ArrayList<RTObject>();
+        
+            
         
             for (RTObject object : fullList) {
                 
@@ -200,11 +206,11 @@ public class RayTracer
                     }
 
                     if (maxZ < object.pos.z || minZ > object.pos.z + size) {
-                    continue;
+                        continue;
                     }
                 }
                 
-            
+        
                 
                 optimisedList.add(object);
             
