@@ -236,7 +236,7 @@ Tato verze také implementuje pohyb pomocí kláves WASD, takže si to můžete 
 To je k mé rychlé dokumentaci druhé verze zatím vše, tak zase do příští verze - Naviděnou! :D
 
 # Kapitola 3
-(verze 3)
+(verze 2.1)
 
 25.04.2026
 Udělal jsem velké pokroky co se výkonu týče. Před přidáváním odlesků a dalších věcí musí engine běžet rychleji, jinak bude jeden render trvat neskutečně dlouho.
@@ -263,11 +263,14 @@ Tahle optimalizace je velice účinná narozdíl od předchozí. Spočívá v to
 Bez optimalizace:
 
 Počet kontrol kolizí: 1 240 016 438
+
 Doba zpracování: 2 721 ms
+
 
 S optimalizací:
 
 Počet kontrol kolizí: 464 440 139
+
 Doba zpracování: 1 648 ms
 
 ### Závěr kapitoly
