@@ -262,14 +262,18 @@ Tahle optimalizace je velice účinná narozdíl od předchozí. Spočívá v to
 
 Bez optimalizace:
 
-`Počet kontrol kolizí: 1 240 016 438
-Doba zpracování: 2 721 ms`
+```
+Počet kontrol kolizí: 1 240 016 438
+Doba zpracování: 2 721 ms
+```
 
 
 S optimalizací:
 
-`Počet kontrol kolizí: 464 440 139
-Doba zpracování: 1 648 ms`
+```
+Počet kontrol kolizí: 464 440 139
+Doba zpracování: 1 648 ms
+```
 
 ### Závěr kapitoly
 
