@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=Camera
-comment1.params=x\ y\ z\ world
-comment1.target=Camera(float,\ float,\ float,\ MyWorld)
-comment2.params=
-comment2.target=void\ tick()
-numComments=3
